@@ -1,0 +1,32 @@
+
+{% extends 'base.html' %}
+      {% block content %}
+    <div class="container">
+        <h1>Welcome to SocialNet</h1>
+        <div class="activities">
+            <ul>
+                <p> if you want to learn how to work with team </p><mark class=" arrow">check here &dArr;</mark><li><a href="https://github.com/veralar2191">GitHub Collaboration</a></li>
+                <li><a href="https://slack.com/your-workspace">Slack Collaboration</a></li>
+            </ul>
+        </div>
+        {% if not user.is_authenticated %}
+        <div class="auth-container">
+            <h2>Please Login or Subscribe</h2>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'subscribe' %}">Subscribe</a>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock%}
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById('profile-dropdown');
+            if (dropdown.style.display === 'none') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

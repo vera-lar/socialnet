@@ -1,0 +1,47 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+
+}
+
+.logo ul li a{
+    display: flex;
+    justify-content: space-between;
+    color: rgb(39, 38, 38);
+  
+}
+.logo a{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;text-decoration: none;
+    list-style-type: none;
+}
+ul li a{
+    gap: 1rem; 
+    list-style-type: none;
+}
+
+.right-sidebar a{
+    display: flex;
+    justify-content:space-evenly;
+    text-align: center;text-decoration: none;
+
+
+  
+}
+.d-flex {
+    padding: 7%; 
+    top: 20px;
+}
+.d-flex a{
+    text-decoration: none; 
+    font-size: larger;
+    color: rgb(31, 19, 158);
+}
+.d-flex  p{
+    color: rgb(9, 9, 34);
+    font-size: large;
+
+}
+

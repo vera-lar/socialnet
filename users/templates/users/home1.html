@@ -1,0 +1,36 @@
+{% extends 'users/layout.html' %}
+{% block content%}
+<header class="site-header">
+    <nav class="nav nav-pills nav-fill" style="background-color: aquamarine; top: fixed;">
+        <a class="nav-link logo" aria-current="page" href="#">SOSIALNET</a>
+        <a class="nav-link" href="#">Activities</a>
+        <a class="nav-link" href="#">Groups</a>
+        <a class="nav-link" href="#">Login</a>
+    </nav>
+
+</header>
+<div class="container">
+    <div class="float-start">
+        {% for user in users %}
+        <div class="card"><a href="#">
+                <h1>{{user.title}}</h1>
+            </a>
+            <h6>staff Name => {{ user.name}}</h4>
+            <p>Job title => {{ user.position}}</p>
+            <p>Joined by => {{ user.join_date}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="float-md-end">
+        {% for post in posts %}
+          <h4>{{ post.title }}</h4>
+          <h6>{{ post.introduction}}</h6>
+          <p>{{ post.step1 }}</p>
+          <p>{{ post.step2 }}</p>
+          <p>{{ post.step3 }}</p>
+          <p>{{ post.step4 }}</p>
+          <h6>{{ post.conclusion }}</h6>
+          {% endfor %}
+    </div>
+</div>
+{% endblock %}

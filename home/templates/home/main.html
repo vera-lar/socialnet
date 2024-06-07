@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block main_content %}
+<h1>User Posts</h1>
+<!-- Example post structure -->
+{% for post in posts %}
+<div class="post">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p>Posted by {{ post.user.username }} on {{ post.date_posted }}</p>
+    <p>Likes: {{ post.likes }} | Comments: {{ post.comments.count }}</p>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block right_sidebar %}
+<h2>Events</h2>
+<!-- Events will be populated here -->
+{% for event in events %}
+<div class="event">
+    <h3>{{ event.title }}</h3>
+    <p>{{ event.description }}</p>
+    <p>Date: {{ event.date }}</p>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+   
+    
+
+    {% if user %}
+        <h1>{{user_profile.user.username }}</h1>
+        {% if profile %}
+            {% if profile.is_online %}
+                <p>Status: Active</p>
+            {% else %}
+                <p>Status: Offline</p>
+            {% endif %}
+            <!-- Add other user information here -->
+            <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
+        {% else %}
+            <p>No profile found for this user.</p>
+            <p><a href="{% url 'setprofile' %}">set up pofile</a></p>
+        {% endif %}
+    {% else %}
+        <p>User not found.</p>
+        <p><a href="{% url 'register' %}">Create an account</a> or <a href="{% url 'login' %}">sign in</a> to create your profile.</p>
+    {% endif %}
+    
+
+</body>
+</html>

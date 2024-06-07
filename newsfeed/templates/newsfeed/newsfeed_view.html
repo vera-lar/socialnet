@@ -1,0 +1,33 @@
+{% extends 'newsfeed/base.html' %}
+
+{% block title %}Newsfeed{% endblock %}
+
+{% block left_sidebar %}
+<ul>
+    <li><a href="https://github.com">GitHub</a></li>
+    <li><a href="https://slack.com">Slack</a></li>
+</ul>
+{% endblock %}
+
+{% block main_content %}
+<h1>User Posts</h1>
+{% for post in posts %}
+<div class="post">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p>Posted by {{ post.user.username }} on {{ post.date_posted }}</p>
+    <p>Likes: {{ post.likes }} | Comments: {{ post.comments.count }}</p>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block right_sidebar %}
+<h2>Events</h2>
+{% for event in events %}
+<div class="event">
+    <h3>{{ event.title }}</h3>
+    <p>{{ event.description }}</p>
+    <p>Date: {{ event.date }}</p>
+</div>
+{% endfor %}
+{% endblock %}

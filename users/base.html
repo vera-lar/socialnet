@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <h1><a href="{% url 'home' %}">SocialNet</a></h1>
+        </div>
+        <div class="nav-right">
+            <div class="profile online">
+                <img src="{{ user.profile.image.url }}" alt="Profile Picture">
+                <button class="profile-btn">+</button>
+                <div class="dropdown">
+                    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+                    <a href="{% url 'change_password' %}">Change Password</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+   
+    <div class="container">
+        <aside class="sidebar">
+            {% block sidebar %}
+            <!-- Sidebar content for events -->
+            <h2>Events</h2>
+            <ul>
+                {% for event in events %}
+                    <li>{{ event.title }} - {{ event.date }}</li>
+                {% endfor %}
+            </ul>
+            {% endblock %}
+        </aside>
+
+        <main>
+            {% block main %}
+            <!-- Main content for user posts -->
+            <h2>User Posts</h2>
+            {% for post in posts %}
+                <div class="post">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content }}</p>
+                    <p>Posted by {{ post.user.username }} on {{ post.date_posted }}</p>
+                    <div>
+                        <span>Likes: {{ post.likes.count }}</span>
+                        <span>Comments: {{ post.comments.count }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.profile-btn').on('click', function() {
+                $('.dropdown').toggle();
+            });
+        });
+    </script>
+</body>
+</html>

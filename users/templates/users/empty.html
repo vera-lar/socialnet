@@ -1,0 +1,111 @@
+users = [ { 'title': 'user1',
+           'name': 'Jane',
+            'position': 'frondend developer',
+              'join_date': 'january  7 2020' } ,
+        {  'title': 'user2',
+            'name': 'Eben',
+            'position': 'SWE',
+            'join_date': 'april  3 2019'},
+
+        { 'title': 'user3',
+          'name': 'Jeol',
+          'position': 'backend developer',
+         'join_date': 'november  21 2022' } ,
+   
+         { 'title': 'user4',
+             'name': 'Nana',
+           'position': 'fullstack',
+           'join_date': 'december  11 2022' }]
+posts = [
+    {'title': 'Title: How to Be Self-Motivated: Strategies for Personal Success',
+      'introduction': 'Introduction Self-motivation is the driving force behind reaching personal and professional goals. It’s the ability to push yourself to take action, regardless of how you’re feeling. This guide will explore practical strategies to cultivate and maintain self-motivation, enabling you to achieve your aspirations and live a fulfilling life. Understanding Self-Motivation Self-motivation is the inner drive that propels you to act towards your goals. It encompasses your desires, ambitions, and the determination to achieve success. Understanding what motivates you personally is crucial for developing sustained self-motivation.',
+
+
+     'step1': 'Identify Your Goals and Purpose 1. Set Clear Goals: Define what you want to achieve in specific terms.Break down large goals into smaller, manageable tasks.Use the SMART criteria (Specific, Measurable, Achievable, Relevant, Time-bound).2. Understand Your ‘Why’: 3. Visualize Success:',
+
+     'step2': 'Develop a Positive Mindset 1. Cultivate Optimism:Focus on the positive aspects of situations.2. Embrace Failure as a Learning Opportunity.3. Surround Yourself with Positivity.',
+
+
+    'step3': 'Create an Action Plan 1. Plan Your Day: Start each day with a to-do list prioritizing your most important tasks.Allocate specific times for each activity to stay organized and focused.2. Develop a Routine:Establish daily habits that align with your goals.Maintain consistency to build momentum and discipline.3. Monitor Your Progress.',
+
+
+    'step4':  'Overcome Obstacles 1. Manage Stress: Practice stress-relief techniques like deep breathing, meditation, or exercise.Take breaks and give yourself time to recharge. 2. Stay Flexible: Be open to changing your approach if something isn’t working.Adapt to new challenges and stay resilient.3. Seek Support.',
+    'step5': 'Maintain Long-Term Motivation 1. Keep Learning: Continuously acquire new skills and knowledge related to your goals. Stay curious and open to new experiences. 2. Find Inspiration: Read biographies, watch documentaries, or listen to talks from people you admire.Draw inspiration from their journeys and apply relevant lessons to your own life.3. Reflect and Adjust.',
+    'conclusion': 'Conclusion Self-motivation is a skill that can be developed with intention and practice. By setting clear goals, maintaining a positive mindset, creating an actionable plan, overcoming obstacles, and sustaining long-term motivation, you can achieve your dreams and lead a more fulfilling life. Remember, the journey to self-motivation is continuous, and every step you take brings you closer to your goals.',
+     }
+]
+
+<img src="{% static 'images/vee.jpg' %}" class="img" alt="SocialNet Logo">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <h1><a href="{% url 'home' %}">SocialNet</a></h1>
+        </div>
+        <div class="nav-right">
+            <div class="profile online">
+                <img src="{{ user.profile.image.url }}" alt="Profile Picture">
+                <button class="profile-btn">+</button>
+                <div class="dropdown">
+                    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+                    <a href="{% url 'change_password' %}">Change Password</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% block main_content %}{% endblock %}
+    </div>
+    
+    <div class="container">
+        <aside class="sidebar">
+            {% block sidebar %}
+            <!-- Sidebar content for events -->
+            <h2>Events</h2>
+            <ul>
+                {% for event in events %}
+                    <li>{{ event.title }} - {{ event.date }}</li>
+                {% endfor %}
+            </ul>
+            {% endblock %}
+        </aside>
+
+        <main>
+            {% block main %}
+            <!-- Main content for user posts -->
+            <h2>User Posts</h2>
+            {% for post in posts %}
+                <div class="post">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content }}</p>
+                    <p>Posted by {{ post.user.username }} on {{ post.date_posted }}</p>
+                    <div>
+                        <span>Likes: {{ post.likes.count }}</span>
+                        <span>Comments: {{ post.comments.count }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endblock %}
+        </main>
+    </div>
+
+   
+</body>
+</html>
+

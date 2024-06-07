@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p>Posted by {{ post.user.username }} on {{ post.date_posted }}</p>
+  <p>{{ post.content }}</p>
+  {% if post.post_type == 'video' %}
+    <video src="{{ post.media_url }}" controls></video>
+  {% elif post.post_type == 'picture' %}
+    <img src="{{ post.media_url }}" alt="{{ post.title }}">
+  {% endif %}
+  <p>{{ post.like_set.count }} Likes</p>
+  <a href="{% url 'like_post' post.id %}">Like</a>
+
+  <h2>Comments</h2>
+  <div>
+    {% for comment in comments %}
+      <div>
+        <p>{{ comment.user.username }}: {{ comment.content }}</p>
+        <p>{{ comment.date_commented }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Comment</button>
+  </form>
+  <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}

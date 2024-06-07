@@ -1,0 +1,39 @@
+
+{% block title %}Dashboard{% endblock %}
+
+{% block main_content %}
+  <a href="{% url 'create_post' %}">Create New Post</a>
+  <div>
+    <h1>User Posts</h1>
+    {% for post in posts %}
+      <div>
+        <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+        <p>Posted by {{ post.user.username }} on {{ post.date_posted }}</p>
+        <p>{{ post.content }}</p>
+      
+        {% if post.post_type == 'video' %}
+          <video src="{{ post.media_url }}" controls></video>
+        {% elif post.post_type == 'picture' %}
+          <img src="{{ post.media_url }}" alt="{{ post.title }}">
+        {% endif %}
+        <p>{{ post.like_set.count }} Likes</p>
+        <a href="{% url 'like_post' post.id %}">Like</a>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
+{% block right_sidebar %}
+<h2>Events</h2>
+<!-- Events will be populated here -->
+{% for event in events %}
+<div class="event">
+    <h3>{{ event.title }}</h3>
+    <p>{{ event.description }}</p>
+    <p>Date: {{ event.date }}</p>
+</div>
+{% endfor %}
+{% endblock %}
+
+
+

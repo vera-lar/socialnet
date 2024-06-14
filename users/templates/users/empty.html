@@ -109,3 +109,66 @@ posts = [
 </body>
 </html>
 
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="left-sidebar">
+    <!-- Add links for open-source collaboration like GitHub, Slack, etc. -->
+    <a href="https://github.com/your-repo">GitHub</a>
+    <a href="https://slack.com/your-slack-channel">Slack</a>
+</div>
+
+<div class="main-content">
+    <h2>Latest News</h2>
+    {% for news in news_list %}
+        <div class="news-item">
+            <h3>{{ news.title }}</h3>
+            <p>{{ news.content }}</p>
+            <p><strong>Author:</strong> {{ news.author.username }}</p>
+            <p><strong>Published At:</strong> {{ news.published_at }}</p>
+            <p><strong>Likes:</strong> {{ news.likes.count }}</p>
+            <p><strong>Comments:</strong> {{ news.comments.count }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="right-sidebar">
+    <h2>Events</h2>
+    {% for event in events %}
+        <div class="event-item">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.description }}</p>
+            <a href="{{ event.url }}" target="_blank">Read more</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block content %}
+<h2>Create News</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% if Post %}
+{% for post in Post %}
+ <article>{{ post }}</article>
+ <fieldset>
+    <legend>{{ post.content }}</legend>
+ </fieldset>
+ {% endfor %}
+{% else%}
+  {% url 'create_post'%}
+{% endif%}
+
+
+{% for event in Event %}
+<h3>{{Event}}</h3>
+{% endfor %}
+
+
+<!-- users urls -->
+

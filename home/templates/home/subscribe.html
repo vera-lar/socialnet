@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'base.html'%}
+{% block content %}
     <title>Subscribe</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-</head>
-<body>
+   
     <div class="auth-container">
         
-        <!-- Add your subscription form here -->
-        
+        <!-- Add your subscription form here -->   
    <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Subscribe</button>
  </form>
     </div>
-</body>
-</html>
+    {% endblock %}

@@ -1,6 +1,14 @@
+
+{% extends 'base.html'%}
 <h1>Create Profile</h1>
 <form method="post">
     {% csrf_token %}
+    {{ form.as_p }}
+    
     <!-- Add fields for profile creation -->
-    <button type="submit">Create Profile</button>
+   <!--  <form action="post">
+        <input type="email" placeholder="enter your email " required>
+        <button type="submit">Create Profile</button>
+    </form>
+     -->
 </form>

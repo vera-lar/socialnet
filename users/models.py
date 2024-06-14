@@ -35,14 +35,7 @@ class User(AbstractUser):
         help_text=('Specific permissions for this user.'),
         verbose_name=('user permissions'),
     )
-class Post(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.title
+
     # Add any additional fields if necessary
     # e.g., profile_picture = models.ImageField(upload_to='profile_pics', blank=True, null=True)
 # newsfeed/models.py
@@ -59,3 +52,34 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title
+
+
+
+
+    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(max_length=500, blank=True)
+    location = models.CharField(max_length=30, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    #profile_picture = models.ImageField(upload_to='profile_pics', null=True, blank=True)
+    is_online = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return self.user.username
+from django.db import models
+
+class Changepassword(models.Model):
+    newpassword = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.newpassword

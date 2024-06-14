@@ -18,12 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('home.urls')), 
-    path('users/', include('users.urls')),
+    path('', include('home.urls')),  # replace 'your_app' with your actual app name
+    #path('users/', include('users.urls')),
     path('newsfeed/', include('newsfeed.urls')),
-    # Add other app URL patterns
 ]

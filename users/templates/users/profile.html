@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>User Profile</title>
 </head>
 <body>
-   
-    
 
-    {% if user %}
-        <h1>{{user_profile.user.username }}</h1>
-        {% if profile %}
-            {% if profile.is_online %}
+    {% if user.is_authenticated %}
+        <h1>{{ user.username }}</h1>
+        {% if user.profile %}
+            {% if user.profile.is_online %}
                 <p>Status: Active</p>
             {% else %}
                 <p>Status: Offline</p>
@@ -19,13 +18,12 @@
             <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
         {% else %}
             <p>No profile found for this user.</p>
-            <p><a href="{% url 'setprofile' %}">set up pofile</a></p>
+            <p><a href="{% url 'setprofile' %}">Set up profile</a></p>
         {% endif %}
     {% else %}
         <p>User not found.</p>
-        <p><a href="{% url 'register' %}">Create an account</a> or <a href="{% url 'login' %}">sign in</a> to create your profile.</p>
+        <p><a href="{% url 'register' %}">Create an account</a> or <a href="{% url 'login' %}">Sign in</a> to create your profile.</p>
     {% endif %}
-    
 
 </body>
 </html>

@@ -67,15 +67,20 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'socialnet.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'socialnet.urls'
 
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_URL = 'login'
+#LOGIN_REDIRECT_URL = 'home'  # or any URL name where you want to redirect after login
+LOGOUT_REDIRECT_URL = 'home'  # or any URL name where you want to redirect after logout
+LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to dashboard after login
+LOGOUT_REDIRECT_URL = 'home'     # Redirect to login after logout
+
 
 from django.contrib.messages import constants as messages
 
@@ -172,8 +177,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_LOGGING = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.veralar2191@gmail.com'
+EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'veralar2191@gmail.com'
 EMAIL_HOST_PASSWORD = 'laR2191089165'
-EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'veralar2191@gmail.com'

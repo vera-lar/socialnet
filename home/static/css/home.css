@@ -1,0 +1,44 @@
+/* home container layout */
+.home-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    height: 200%;
+    background: url('/static/images/vee.jpg') no-repeat center center;  /* Update this path if necessary */
+    background-size: cover;
+    margin-top: auto;
+    padding: 27%;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    z-index: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.content {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.forms {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+}
+
+.form-container {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}

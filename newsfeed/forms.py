@@ -11,10 +11,15 @@ class NewsForm(forms.ModelForm):
         model = News
         fields = ['title', 'content', 'author']
 
+
+
 class LiveVideoForm(forms.ModelForm):
+    start_time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}))
+
     class Meta:
         model = LiveVideo
-        fields = ['title', 'description', 'start_time', 'stream_url', 'author']
+        fields = ['title', 'description', 'start_time', 'stream_url' ]  # Adjust as necessary
+
 
 class CommentForm(forms.ModelForm):
     class Meta:

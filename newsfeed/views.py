@@ -4,12 +4,12 @@ import requests
 from django.views import View
 from django.views.generic import ListView, CreateView
 from django.shortcuts import render, redirect
-from .models import News, LiveVideo, Event
+from .models import News, LiveVideo, Event, Post
 from .forms import NewsForm, LiveVideoForm, CommentForm
 from .utils import fetch_google_news
-from django.shortcuts import render, redirect
 from .forms import PostForm
-from .models import Post  # Make sure to import your Post model
+from .models import Post, Event, LiveVideo
+from django.contrib.auth.decorators import login_required
 
 
 class NewsListView(View):
@@ -61,9 +61,7 @@ def fetch_news(request):
         )
 
     return redirect('news_list.html')
-def news_list(request):
-    news = News.objects.all()
-    return render(request, 'newsfeed/news_list.html', {'news': news})
+
 
 def live_video_list(request):
     return render(request, 'newsfeed/live_video.html',{})
@@ -101,27 +99,6 @@ def create_live_video(request):
 
 # newsfeed/views.py
 
-
-def dashboard(request):
-    if request.method == 'POST':
-        news_form = NewsForm(request.POST)
-        if news_form.is_valid():
-            news = news_form.save(commit=False)
-            news.user = request.user
-            news.save()
-            return redirect('dashboard')
-    else:
-        news_form = NewsForm()
-
-    posts = News.objects.all()
-    events = []  # Fetch events using Google News API or other sources
-
-    context = {
-        'news_form': news_form,
-        'posts': posts,
-        'events': events,
-    }
-    return render(request, 'dashboard.html', context)
 
 
 class NewsListView(ListView):
@@ -180,30 +157,21 @@ def go_live(request):
         form = LiveVideoForm()
     return render(request, 'newsfeed/go_live.html', {'form': form}) 
 
-
-
-
+@login_required
 def news_list(request):
-    posts = Post.objects.all()  # Fetch all posts from the database
+    posts = Post.objects.all()
+    events = Event.objects.all()
+    live_videos = LiveVideo.objects.all()
     context = {
-        'posts': posts  # Pass the posts to the template
+        'posts': posts,
+        'events': events,
+        'live_videos': live_videos,
     }
     return render(request, 'newsfeed/news_list.html', context)
 
 
-def create_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user
-            post.save()
-            return redirect('profile')
-    else:
-        form = PostForm()
-    return render(request, 'newsfeed/create_post.html', {'form': form})
-from django.shortcuts import render, redirect
-from .forms import PostForm
+
+
 
 def create_post(request):
     if request.method == 'POST':
@@ -215,3 +183,9 @@ def create_post(request):
         form = PostForm()
 
     return render(request, 'newsfeed/post_form.html', {'form': form})
+
+def post_detail(request):
+    return render(request, 'newsfeed/post_detail.html', {'Post': post_detail}
+
+
+    )

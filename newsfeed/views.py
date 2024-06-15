@@ -182,7 +182,7 @@ def create_post(request):
     else:
         form = PostForm()
 
-    return render(request, 'newsfeed/post_form.html', {'form': form})
+    return render(request, 'newsfeed/news_form.html', {'form': form})
 
 def post_detail(request):
     return render(request, 'newsfeed/post_detail.html', {'Post': post_detail}

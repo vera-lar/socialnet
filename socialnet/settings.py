@@ -183,3 +183,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'veralar2191@gmail.com'
 EMAIL_HOST_PASSWORD = 'laR2191089165'
 DEFAULT_FROM_EMAIL = 'veralar2191@gmail.com'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -70,7 +70,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    #profile_picture = models.ImageField(upload_to='profile_pics', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pics', null=True, blank=True)
     is_online = models.BooleanField(default=False)
 
 
@@ -83,3 +83,15 @@ class Changepassword(models.Model):
 
     def __str__(self):
         return self.newpassword
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+from .models import Profile
+
+@receiver(post_save, sender=User)
+def create_or_get_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+    else:
+        instance.profile.save()

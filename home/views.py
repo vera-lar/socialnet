@@ -4,7 +4,7 @@ from .forms import SubscribeForm
 from django.core.mail import send_mail
 from django.conf import settings
 from multiprocessing import AuthenticationError
-from django.shortcuts import render, redirect
+
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -12,7 +12,10 @@ from .forms import ContactForm
 from .forms import SignUpForm, SignInForm  # Assuming these forms are defined in forms.py
 from django.contrib.auth.forms import UserCreationForm,authenticate
 
-
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from users.forms import UserProfileForm, ProfileForm
+from users.models import Profile
 
 def home(request):
     signup_form = SignUpForm()
@@ -122,37 +125,86 @@ def send_confirmation_email(email):
 
 from newsfeed.models import Post, Event
 from users.forms import UserForm, ProfileForm
-from users.models import Profile
+#from users.models import Profile
 
 
 def dashboard(request):
-    posts = Post.objects.all()  # Customize this query as needed
-    events = Event.objects.all()  # Fetch events
-    context = {
-      'posts': posts,
-      'events': events,
-    }
-    return render(request, 'newsfeed/dashboard.html', context)
+    return render(request, 'newsfeed/dashboard.html')
 
+#def edit_profile(request):
+   # user = request.user
+    #profile, created = Profile.objects.get_or_create(user=user)
+
+    #if request.method == 'POST':
+      #  user_form = UserForm(request.POST, instance=user)
+       # profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+      #  if user_form.is_valid() and profile_form.is_valid():
+     #       user_form.save()
+      #      profile_form.save()
+      #      return redirect('profile')
+    #else:
+      #  user_form = UserForm(instance=user)
+      #  profile_form = ProfileForm(instance=profile)
+
+    #return render(request, 'users/edit_profile.html', {
+       # 'user_form': user_form,
+     #   'profile_form': profile_form
+   # })
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from users.forms import UserProfileForm, ProfileForm
+from users.models import Profile
+
+@login_required
 def edit_profile(request):
     user = request.user
     profile, created = Profile.objects.get_or_create(user=user)
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=user)
-        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+        user_form = UserProfileForm(request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, instance=profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect('profile')
+            return redirect('dashboard')
     else:
-        user_form = UserForm(instance=user)
+        user_form = UserProfileForm(instance=user)
         profile_form = ProfileForm(instance=profile)
 
-    return render(request, 'users/edit_profile.html', {
+    context = {
         'user_form': user_form,
         'profile_form': profile_form
-    })
+    }
+    return render(request, 'users/edit_profile.html', context)
+
+
+
+#@login_required
+#def edit_profile(request):
+    ##user = request.user
+    #try:
+       # profile = user.profile
+    #except Profile.DoesNotExist:
+   #     profile = Profile(user=user)
+#
+  #  if request.method == 'POST':
+   #     user_form = UserProfileForm(request.POST, instance=user)
+       # profile_form = ProfileForm(request.POST, instance=profile)
+      #  if user_form.is_valid() and profile_form.is_valid():
+            #user_form.save()
+         #   profile_form.save()
+      #      return redirect('dashboard')
+  #  else:
+      #  user_form = UserProfileForm(instance=user)
+    #    profile_form = ProfileForm(instance=profile)
+
+  #  context = {
+      #  'user_form': user_form,
+  #      'profile_form': profile_form
+    
+  #  return render(request, 'users/edit_profile.html', context) 
+
 from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 from django.urls import reverse_lazy
 
@@ -183,7 +235,7 @@ def create_post(request):
 
 
 from users.forms import ChangepasswordForm
-def profile(request):
+def Profile(request):
     try:
         user_profile = request.user.userprofile
     except Profile.DoesNotExist:

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,13 +8,13 @@
 
     {% if user.is_authenticated %}
         <h1>{{ user.username }}</h1>
-        {% if user.profile %}
-            {% if user.profile.is_online %}
+        {% if user.Userprofile %}
+            {% if user.Userprofile.is_online %}
                 <p>Status: Active</p>
             {% else %}
                 <p>Status: Offline</p>
             {% endif %}
-            <!-- Add other user information here -->
+           Add other user information here 
             <a href="{% url 'edit_profile' user.username %}">Edit Profile</a>
         {% else %}
             <p>No profile found for this user.</p>
@@ -25,5 +25,26 @@
         <p><a href="{% url 'register' %}">Create an account</a> or <a href="{% url 'login' %}">Sign in</a> to create your profile.</p>
     {% endif %}
 
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ user.username }}'s Profile</title>
+</head>
+<body>
+    <h1>{{ user.username }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <p>First name: {{ user.first_name }}</p>
+    <p>Last name: {{ user.last_name }}</p>
+    <p>Bio: {{ profile.bio }}</p>
+    <p>Location: {{ profile.location }}</p>
+    <p>Birth date: {{ profile.birth_date }}</p>
+    {% if profile.profile_picture %}
+        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+    {% endif %}
+    <a href="{% url 'edit_profile' %}">Edit Profile</a>
 </body>
 </html>

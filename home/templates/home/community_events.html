@@ -1,0 +1,30 @@
+<!-- community_events.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upcoming Events</title>
+</head>
+<body>
+    <h1>Upcoming Events</h1>
+
+    <!-- Form to create a new event -->
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Event</button>
+    </form>
+
+    <!-- Display all events -->
+    <ul>
+        {% for event in events %}
+            <li>
+                <h2>{{ event.title }}</h2>
+                <p>{{ event.description }}</p>
+                <p>Date: {{ event.date }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

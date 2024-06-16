@@ -1,0 +1,29 @@
+<!-- community_forum.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+</head>
+<body>
+    <h1>Forum</h1>
+
+    <!-- Form to create a new thread -->
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ thread_form.as_p }}
+        <button type="submit">Create Thread</button>
+    </form>
+
+    <!-- Display all threads -->
+    <ul>
+        {% for thread in threads %}
+            <li>
+                <h2><a href="{% url 'forum_thread' thread.id %}">{{ thread.title }}</a></h2>
+                <p>by {{ thread.author.username }} at {{ thread.created_at }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -17,6 +17,16 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('logout/', views.logout, name='logout'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('community_chat/', views.community_chat, name='community_chat'),
+    path('project_list/', views.project_list, name='project_list'),
+    path('create_project/', views.create_project, name='create_project'),
+
+    #community post, upcoming event and more
+    path('community_posts/', views.community_posts, name='community_posts'),
+    path('community_events/', views.community_events, name='community_events'),
+    path('community_forum/', views.community_forum, name='community_forum'),
+    path('community_forum/<int:thread_id>/', views.forum_thread, name='forum_thread'),
+    path('community_tutorials/', views.community_tutorials, name='community_tutorials'),
 
 ]
 

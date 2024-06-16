@@ -17,6 +17,11 @@ from django.contrib.auth.decorators import login_required
 from users.forms import UserProfileForm, ProfileForm
 from users.models import Profile
 
+
+
+from .models import CommunityPost
+from .forms import CommunityPostForm
+
 def home(request):
     signup_form = SignUpForm()
     signin_form = SignInForm()
@@ -129,7 +134,29 @@ from users.forms import UserForm, ProfileForm
 
 
 def dashboard(request):
-    return render(request, 'newsfeed/dashboard.html')
+    return render(request, 'home/dashboard.html')
+
+# home/views.py
+
+from .models import Project
+from .forms import ProjectForm  # Assuming you have a ProjectForm defined
+
+def create_project(request):
+    if request.method == 'POST':
+        # If the request method is POST, process the form data
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            # Form data is valid, create a new Project object
+            project = form.save(commit=False)  # Create project object but don't save to DB yet
+            project.save()  # Save the project object to the database
+            return redirect('project_created')  # Redirect to a success page or another view
+    else:
+        # If the request method is GET, render the form to create a new project
+        form = ProjectForm()
+
+    # Render the template with the form (whether it's a GET request or form errors on POST)
+    return render(request, 'home/create_project.html', {'form': form})
+
 
 #def edit_profile(request):
    # user = request.user
@@ -179,6 +206,33 @@ def edit_profile(request):
     return render(request, 'users/edit_profile.html', context)
 
 
+def project_list(request):
+    # Retrieve all projects from the database
+    projects = Project.objects.all()
+    return render(request, 'home/project_list.html', {'projects': projects})
+
+# views.py
+
+
+
+from .models import Message
+from .forms import MessageForm
+
+@login_required
+def community_chat(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['message']
+            Message.objects.create(content=content, user=request.user)
+            return redirect('community_chat')  # Redirect to refresh chat
+    else:
+        form = MessageForm()
+
+    # Fetch all messages to display
+    chat_messages = Message.objects.all().order_by('-timestamp')[:20]  # Limit to latest 20 messages
+
+    return render(request, 'chats/community_chat.html', {'form': form, 'chat_messages': chat_messages})
 
 #@login_required
 #def edit_profile(request):
@@ -261,3 +315,91 @@ def change_password(request):
 def logout(request):
     logout(request)
     return redirect('login')
+
+
+# views.py
+
+
+@login_required
+def community_posts(request):
+    if request.method == 'POST':
+        form = CommunityPostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('community_posts')
+    else:
+        form = CommunityPostForm()
+    
+    posts = CommunityPost.objects.all().order_by('-created_at')
+    return render(request, 'community_posts.html', {'form': form, 'posts': posts})
+
+# views.py
+from .models import CommunityEvent
+from .forms import CommunityEventForm
+
+@login_required
+def community_events(request):
+    if request.method == 'POST':
+        form = CommunityEventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('community_events')
+    else:
+        form = CommunityEventForm()
+    
+    events = CommunityEvent.objects.all().order_by('date')
+    return render(request, 'community_events.html', {'form': form, 'events': events})
+
+# views.py
+from .forms import ForumThreadForm, ForumThread, ForumPostForm
+
+@login_required
+def community_forum(request):
+    if request.method == 'POST':
+        thread_form = ForumThreadForm(request.POST)
+        if thread_form.is_valid():
+            thread = thread_form.save(commit=False)
+            thread.author = request.user
+            thread.save()
+            return redirect('community_forum')
+    else:
+        thread_form = ForumThreadForm()
+
+    threads = ForumThread.objects.all().order_by('-created_at')
+    return render(request, 'community_forum.html', {'thread_form': thread_form, 'threads': threads})
+
+@login_required
+def forum_thread(request, thread_id):
+    thread = ForumThread.objects.get(id=thread_id)
+    if request.method == 'POST':
+        post_form = ForumPostForm(request.POST)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
+            post.author = request.user
+            post.thread = thread
+            post.save()
+            return redirect('forum_thread', thread_id=thread.id)
+    else:
+        post_form = ForumPostForm()
+
+    return render(request, 'forum_thread.html', {'thread': thread, 'post_form': post_form})
+
+# views.py
+from .forms import TutorialForm
+from .models import Tutorial
+@login_required
+def community_tutorials(request):
+    if request.method == 'POST':
+        form = TutorialForm(request.POST)
+        if form.is_valid():
+            tutorial = form.save(commit=False)
+            tutorial.author = request.user
+            tutorial.save()
+            return redirect('community_tutorials')
+    else:
+        form = TutorialForm()
+    
+    tutorials = Tutorial.objects.all().order_by('-created_at')
+    return render(request, 'community_tutorials.html', {'form': form, 'tutorials': tutorials})

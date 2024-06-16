@@ -1,0 +1,30 @@
+<!-- forum_thread.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ thread.title }}</title>
+</head>
+<body>
+    <h1>{{ thread.title }}</h1>
+    <p>by {{ thread.author.username }} at {{ thread.created_at }}</p>
+
+    <!-- Display all posts -->
+    <ul>
+        {% for post in thread.posts.all %}
+            <li>
+                <p>{{ post.content }}</p>
+                <p>by {{ post.author.username }} at {{ post.created_at }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form to create a new post -->
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ post_form.as_p }}
+        <button type="submit">Post Reply</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project List</title>
+</head>
+<body>
+    <h1>Project List</h1>
+
+    <ul>
+        {% for project in projects %}
+        <div class="card">
+            <li>{{ project.title }} - {{ project.description }} </li>
+            <li>{{ project.platform }} - {{ project.libraries }} </li>
+            <li>{{ project.files}}  </li>
+        </div>
+            <!-- Add more details about the project as needed -->
+        {% empty %}
+            <li>No projects found.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Link to create a new project -->
+    <a href="{% url 'create_project' %}">Create a New Project</a>
+</body>
+</html>

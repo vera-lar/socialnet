@@ -1,0 +1,39 @@
+<!-- community_chat.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Chat</title>
+    <style>
+        /* CSS styles for chat interface */
+        .chat-messages {
+            list-style-type: none;
+            padding: 0;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Community Chat</h1>
+
+    <!-- Chat messages -->
+    <ul class="chat-messages">
+        {% for message in chat_messages %}
+            <li class="chat-message">{{ message.content }} - {{ message.user.username }} ({{ message.timestamp|date:"H:i:s" }})</li>
+            <!-- Display username and timestamp -->
+        {% empty %}
+            <li>No messages yet.</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Form to send a new message -->
+    <form method="post" action="{% url 'send_message' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

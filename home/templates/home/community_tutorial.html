@@ -1,0 +1,30 @@
+<!-- community_tutorials.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tutorials</title>
+</head>
+<body>
+    <h1>Tutorials</h1>
+
+    <!-- Form to create a new tutorial -->
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post Tutorial</button>
+    </form>
+
+    <!-- Display all tutorials -->
+    <ul>
+        {% for tutorial in tutorials %}
+            <li>
+                <h2>{{ tutorial.title }}</h2>
+                <p>{{ tutorial.content }}</p>
+                <p>by {{ tutorial.author.username }} at {{ tutorial.created_at }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

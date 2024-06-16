@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SocialNet</title>
@@ -11,7 +12,7 @@
         <h1>Welcome to SocialNet Dashboard</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'profile' request.user.username %}">Profile</a></li>
+                <li><a href="{% url 'Profile' request.user.username %}">Profile</a></li>
                 <li><a href="{% url 'create_post' %}">Create Post</a></li>
                 <li><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
@@ -41,7 +42,7 @@
             <ul>
                 <li><a href="{% url 'create_project' %}">Start a New Project</a></li>
                 <li><a href="{% url 'project_list' %}">View All Projects</a></li>
-                <li><a href="{% url 'chat' %}">Community Chat</a></li>
+                <li><a href="{% url 'community_chat' %}">Community Chat</a></li>
                 <li><a href="https://github.com/vera-lar" target="_blank">Our GitHub Account</a></li>
             </ul>
         </section>
